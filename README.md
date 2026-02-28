@@ -5,7 +5,7 @@ FinSec is an interactive phishing simulation and just-in-time training platform 
 ---
 
 ## 📁 Project Structure
-
+```
 
 finsec/
 ├── server.js              # Backend entry point (Express)
@@ -14,7 +14,7 @@ finsec/
 ├── package.json           # Backend dependencies
 ├── .env                   # Environment variables (DO NOT COMMIT)
 └── README.md
-
+```
 
 ---
 
@@ -31,10 +31,10 @@ finsec/
 
 ### Step 1 — Clone Repository
 
-bash
+```bash
 git clone https://github.com/YOUR_USERNAME/finsec.git
 cd finsec
-
+```
 
 ---
 
@@ -42,59 +42,59 @@ cd finsec
 
 ### Step 2 — Install Dependencies
 
-bash
+```bash
 npm install
-
+```
 
 ### Step 3 — Create Environment File
 
 Create a file named:
 
-
+```
 .env
-
+```
 
 Inside the root folder.
 
 ### Option A — SQLite (Recommended for Local Development)
 
-env
+```env
 DATABASE_URL="file:./dev.db"
 JWT_SECRET="dev_secret_change_me"
-
+```
 
 ### Option B — PostgreSQL
 
-env
+```env
 DATABASE_URL="postgresql://postgres:password@localhost:5432/finsec?schema=public"
 JWT_SECRET="dev_secret_change_me"
-
+```
 
 ---
 
 ### Step 4 — Generate Prisma Client
 
-bash
+```bash
 npx prisma generate
-
+```
 
 ### Step 5 — Run Database Migration
 
-bash
+```bash
 npx prisma migrate dev
-
+```
 
 ### Step 6 — Start Backend Server
 
-bash
+```bash
 node server.js
-
+```
 
 Backend runs on:
 
-
+```
 http://localhost:3000
-
+```
 
 ---
 
@@ -104,43 +104,43 @@ Open a *new terminal window*.
 
 ### Step 7 — Navigate to Frontend
 
-bash
+```bash
 cd vite-project
-
+```
 
 ### Step 8 — Install Frontend Dependencies
 
-bash
+```bash
 npm install
-
+```
 
 ### Step 9 — Start Frontend
 
-bash
+```bash
 npm run dev
-
+```
 
 Frontend runs on:
 
-
+```
 http://localhost:5173
-
+```
 
 ---
 
 ## 🔐 Default Demo Accounts
 
 *Admin*
-
+```
 Email: admin@fintechdemo.com
 Password: Admin12345!
-
+```
 
 *Employee*
-
+```
 Email: user1@fintechdemo.com
 Password: User12345!
-
+```
 
 ---
 
@@ -173,15 +173,15 @@ Password: User12345!
 
 When clicked, it calls:
 
-
+```
 GET /employee/training/pending
-
+```
 
 The backend checks if a TrainingCompletion record exists where:
 
-
+```
 acknowledgedAt = null
-
+```
 
 If such record exists:
 - Training is still pending.
