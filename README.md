@@ -1,199 +1,231 @@
 # FinSec – Interactive Phishing Training Platform
 
-FinSec is an interactive phishing simulation and just-in-time training platform built for FinTech environments.
+FinSec is an interactive phishing simulation and just-in-time training platform built for FinTech environments. It enables administrators to simulate phishing attacks, measure employee behavior, and enforce contextual security training after risky actions.
 
-================================================================================
-PROJECT STRUCTURE
-================================================================================
+---
+
+## 📁 Project Structure
+
 
 finsec/
-│
-├── server.js              # Backend entry point
+├── server.js              # Backend entry point (Express)
 ├── prisma/                # Prisma schema + migrations
 ├── vite-project/          # React frontend (Vite)
 ├── package.json           # Backend dependencies
 ├── .env                   # Environment variables (DO NOT COMMIT)
 └── README.md
 
-================================================================================
-REQUIREMENTS
-================================================================================
+
+---
+
+## ⚙️ Requirements
 
 - Node.js (v18+ recommended)
 - npm
 - Git
 - SQLite (default) OR PostgreSQL
 
-================================================================================
-INSTALLATION & SETUP
-================================================================================
+---
 
-STEP 1 — Clone Repository
+## 🚀 Installation & Setup
 
+### Step 1 — Clone Repository
+
+bash
 git clone https://github.com/YOUR_USERNAME/finsec.git
 cd finsec
 
 
-================================================================================
-BACKEND SETUP (ROOT FOLDER)
-================================================================================
+---
 
-STEP 2 — Install Dependencies
+## 🔧 Backend Setup (Root Folder)
 
+### Step 2 — Install Dependencies
+
+bash
 npm install
 
 
-STEP 3 — Create Environment File
+### Step 3 — Create Environment File
 
 Create a file named:
 
+
 .env
+
 
 Inside the root folder.
 
-OPTION A — SQLite (Recommended for Local)
+### Option A — SQLite (Recommended for Local Development)
 
+env
 DATABASE_URL="file:./dev.db"
 JWT_SECRET="dev_secret_change_me"
 
 
-OPTION B — PostgreSQL
+### Option B — PostgreSQL
 
+env
 DATABASE_URL="postgresql://postgres:password@localhost:5432/finsec?schema=public"
 JWT_SECRET="dev_secret_change_me"
 
 
-STEP 4 — Generate Prisma Client
+---
 
+### Step 4 — Generate Prisma Client
+
+bash
 npx prisma generate
 
 
-STEP 5 — Run Database Migration
+### Step 5 — Run Database Migration
 
+bash
 npx prisma migrate dev
 
 
-STEP 6 — Start Backend Server
+### Step 6 — Start Backend Server
 
+bash
 node server.js
 
+
 Backend runs on:
+
 
 http://localhost:3000
 
 
-================================================================================
-FRONTEND SETUP
-================================================================================
+---
 
-Open a NEW terminal.
+## 💻 Frontend Setup
 
-STEP 7 — Navigate to Frontend
+Open a *new terminal window*.
 
+### Step 7 — Navigate to Frontend
+
+bash
 cd vite-project
 
 
-STEP 8 — Install Frontend Dependencies
+### Step 8 — Install Frontend Dependencies
 
+bash
 npm install
 
 
-STEP 9 — Start Frontend
+### Step 9 — Start Frontend
 
+bash
 npm run dev
 
+
 Frontend runs on:
+
 
 http://localhost:5173
 
 
-================================================================================
-DEFAULT DEMO ACCOUNTS
-================================================================================
+---
 
-Admin:
-admin@fintechdemo.com
-Admin12345!
+## 🔐 Default Demo Accounts
 
-Employee:
-user1@fintechdemo.com
-User12345!
+*Admin*
+
+Email: admin@fintechdemo.com
+Password: Admin12345!
 
 
-================================================================================
-SYSTEM FLOW
-================================================================================
+*Employee*
 
-ADMIN:
+Email: user1@fintechdemo.com
+Password: User12345!
+
+
+---
+
+## 🧠 System Flow
+
+### Admin Capabilities
+
 - Create employees
 - Create phishing templates
 - Create campaigns (Baseline / Post)
 - Assign drills
-- View metrics
+- Monitor metrics (click rate, report rate, completion status)
 
-EMPLOYEE:
-- Receives phishing drill
-- Chooses:
-    Open Link
-    Report Phishing
-    Ignore
-- If CLICKED:
-    → AI Coach training is triggered
-    → Quiz must score ≥ 2/3
-    → Training must be acknowledged
-    → Next drill unlocks
+### Employee Flow
 
-================================================================================
-WHAT "REFRESH TRAINING" DOES
-================================================================================
+1. Employee receives phishing drill.
+2. Employee chooses one action:
+   - Open Link
+   - Report Phishing
+   - Ignore
+3. If employee clicks a suspicious link:
+   - AI Coach training is triggered.
+   - Quiz must score ≥ 2/3.
+   - Training must be acknowledged.
+   - Next drill unlocks only after completion.
 
-Calls:
+---
+
+## 🔄 What “Refresh Training” Does
+
+When clicked, it calls:
+
+
 GET /employee/training/pending
 
-Checks database for:
-TrainingCompletion record where acknowledgedAt = null
 
-If exists:
-- Training still pending
-- Drills remain blocked
+The backend checks if a TrainingCompletion record exists where:
 
-If not:
-- User can proceed to next drill
 
-================================================================================
-DATABASE TABLES
-================================================================================
+acknowledgedAt = null
 
-User
-Campaign
-PhishingTemplate
-Assignment
-TrainingModule
-TrainingCompletion
-Nudge
 
-================================================================================
-TECH STACK
-================================================================================
+If such record exists:
+- Training is still pending.
+- Drills remain locked.
 
-Frontend: React + Vite
-Backend: Node.js + Express
-ORM: Prisma
-Database: SQLite / PostgreSQL
-Auth: JWT
-Password Security: bcrypt
+If no pending training exists:
+- User can proceed to the next drill.
 
-================================================================================
-ACADEMIC CONTEXT
-================================================================================
+---
 
-Arab Academy of Science, Technology & Maritime Transport (AASTMT)
-Smart Village, Giza, Egypt
+## 🗄 Database Tables
 
-Authors:
-Abdulqudus Jimoh
-Mohamed Ashraf
-Mubarak Jimoh
+- *User*
+- *Campaign*
+- *PhishingTemplate*
+- *Assignment*
+- *TrainingModule*
+- *TrainingCompletion*
+- *Nudge*
 
-Supervisor:
-Ahmed Maher
+---
+
+## 🛠 Technology Stack
+
+- Frontend: React + Vite
+- Backend: Node.js + Express
+- ORM: Prisma
+- Database: SQLite / PostgreSQL
+- Authentication: JWT
+- Password Security: bcrypt
+
+---
+
+## 🎓 Academic Context
+
+Developed as part of an MSc research project at:
+
+*Arab Academy of Science, Technology & Maritime Transport (AASTMT)*  
+Smart Village, Giza, Egypt  
+
+*Authors*
+- Abdulqudus Jimoh  
+- Mohamed Ashraf  
+- Mubarak Jimoh  
+
+*Supervisor*
+- Ahmed Maher
