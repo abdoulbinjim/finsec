@@ -215,6 +215,14 @@ If no pending training exists:
 
 ---
 
+## 📄 Research Paper
+
+You can read the full MSc paper here:
+
+[Download FinSec Research Paper](docs/FINSEC RESEARCH PAPER.pdf)
+
+---
+
 ## 🎓 Academic Context
 
 Developed as part of an MSc research project at:
