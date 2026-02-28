@@ -1,0 +1,450 @@
+:root{
+  --bg:#0b0f14;
+  --panel:#0f1620;
+  --card:#101a26;
+  --border:rgba(255,255,255,.08);
+  --muted:rgba(255,255,255,.65);
+  --text:rgba(255,255,255,.92);
+
+  --primary:#7c3aed;
+  --primary2:#a78bfa;
+  --good:#22c55e;
+  --warn:#f59e0b;
+  --bad:#ef4444;
+
+  --radius:16px;
+  --shadow: 0 12px 34px rgba(0,0,0,.45);
+}
+
+*{ box-sizing:border-box; }
+html,body,#root{
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+body{
+  margin:0;
+  background:
+    radial-gradient(1200px 600px at 20% 10%, rgba(124,58,237,.22), transparent 55%),
+    radial-gradient(900px 450px at 80% 0%, rgba(34,197,94,.14), transparent 45%),
+    var(--bg);
+  color:var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+}
+
+/* -------- layout -------- */
+
+.container {
+  width: 100vw;
+  margin: 0;
+  padding: 16px 24px;
+  height: calc(100vh - 72px);
+  overflow: hidden;
+}
+
+.grid{
+  display:grid;
+  gap:16px;
+  margin-top:16px;
+}
+
+.twoCol{
+  grid-template-columns: 1.25fr .9fr;
+}
+@media (max-width: 920px){
+  .twoCol{ grid-template-columns: 1fr; }
+}
+
+.grid3{
+  display:grid;
+  grid-template-columns: repeat(3,1fr);
+  gap:14px;
+}
+@media (max-width: 920px){
+  .grid3{ grid-template-columns:1fr; }
+}
+
+.row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+/* -------- topbar -------- */
+
+.topbar{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:16px;
+  border:1px solid var(--border);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+
+.brand{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  margin-right:auto;
+}
+.brand h1{
+  margin:0;
+  font-size:18px;
+  letter-spacing:.3px;
+}
+.brand .sub{
+  font-size:12px;
+  color:var(--muted);
+}
+
+/* -------- pills & badges -------- */
+
+.pill,
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-size:12px;
+  padding:6px 12px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.04);
+  color:rgba(255,255,255,.85);
+}
+
+.badge strong{ color:var(--text); }
+
+/* -------- buttons -------- */
+
+.btn{
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.05);
+  color:var(--text);
+  padding:10px 14px;
+  border-radius:14px;
+  cursor:pointer;
+  font-weight:600;
+  font-size:13px;
+  transition:
+    background .15s ease,
+    border-color .15s ease,
+    transform .08s ease,
+    box-shadow .15s ease;
+}
+
+.btn:hover{
+  background:rgba(255,255,255,.09);
+  border-color:rgba(255,255,255,.18);
+}
+
+.btn:active{
+  transform:translateY(1px);
+}
+
+.btn:disabled{
+  opacity:.4;
+  cursor:not-allowed;
+  box-shadow:none;
+}
+
+.btnPrimary{
+  background:
+    linear-gradient(135deg, rgba(124,58,237,.95), rgba(167,139,250,.9));
+  border-color:rgba(124,58,237,.7);
+  box-shadow:0 8px 24px rgba(124,58,237,.25);
+}
+
+.btnPrimary:hover{
+  background:
+    linear-gradient(135deg, rgba(124,58,237,1), rgba(167,139,250,1));
+}
+
+.btnDanger{
+  background:rgba(239,68,68,.16);
+  border-color:rgba(239,68,68,.4);
+}
+
+.btnDanger:hover{
+  background:rgba(239,68,68,.24);
+  border-color:rgba(239,68,68,.6);
+}
+
+.btnGhost{
+  background:transparent;
+}
+
+.btnInline{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+}
+
+.glow{
+  box-shadow:
+    0 0 0 1px rgba(124,58,237,.3),
+    0 10px 30px rgba(124,58,237,.18);
+}
+
+/* -------- cards -------- */
+
+.card{
+  border:1px solid var(--border);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)),
+    rgba(16,26,38,.78);
+  backdrop-filter: blur(8px);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:18px;
+}
+
+.cardTitle{
+  margin:0 0 10px;
+  font-size:14px;
+  letter-spacing:.3px;
+}
+
+.cardHint{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:-6px;
+  margin-bottom:12px;
+}
+
+/* -------- form -------- */
+
+.field{
+  display:grid;
+  gap:6px;
+}
+
+.field label{
+  font-size:12px;
+  color:var(--muted);
+}
+
+.input{
+  width:100%;
+  padding:12px 14px;
+  border-radius:14px;
+  border:1px solid var(--border);
+  background:rgba(0,0,0,.28);
+  color:var(--text);
+  outline:none;
+}
+
+.input:focus{
+  border-color:rgba(167,139,250,.6);
+  box-shadow:0 0 0 2px rgba(167,139,250,.15);
+}
+
+/* -------- email / drill -------- */
+
+.email{
+  border:1px solid var(--border);
+  background:rgba(0,0,0,.22);
+  border-radius:16px;
+  padding:16px;
+}
+
+.emailHeader{
+  display:grid;
+  gap:6px;
+  padding-bottom:12px;
+  border-bottom:1px dashed rgba(255,255,255,.12);
+}
+
+.emailHeader .line{
+  display:flex;
+  gap:10px;
+  font-size:13px;
+}
+
+.emailHeader .label{
+  color:var(--muted);
+  width:70px;
+}
+
+.emailBody{
+  margin-top:12px;
+  font-size:13px;
+  line-height:1.5;
+  white-space:pre-wrap;
+  color:rgba(255,255,255,.88);
+}
+
+.actions{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:14px;
+}
+
+/* -------- metrics -------- */
+
+.metricGrid{
+  display:grid;
+  gap:10px;
+}
+
+.metricRow{
+  display:flex;
+  justify-content:space-between;
+  font-size:13px;
+}
+
+.metricRow span{
+  color:var(--muted);
+}
+
+.metricBar{
+  height:10px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.04);
+  overflow:hidden;
+}
+
+.metricBar > div{
+  height:100%;
+  background:
+    linear-gradient(90deg, rgba(124,58,237,.9), rgba(34,197,94,.8));
+  transition:width .4s ease;
+}
+
+/* -------- misc -------- */
+
+.small{
+  font-size:12px;
+  color:var(--muted);
+}
+
+.hr{
+  height:1px;
+  background:rgba(255,255,255,.1);
+  margin:16px 0;
+}
+
+.kbd{
+  font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas;
+  font-size:12px;
+  padding:4px 8px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.05);
+  color:rgba(255,255,255,.8);
+}
+
+/* -------- toast -------- */
+
+.toast{
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.04);
+  border-radius:16px;
+  padding:14px;
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+}
+
+.toast.good{ border-color:rgba(34,197,94,.4); }
+.toast.warn{ border-color:rgba(245,158,11,.4); }
+.toast.bad{ border-color:rgba(239,68,68,.4); }
+
+.toast b{ font-size:13px; }
+.toast p{ margin:2px 0 0; font-size:12px; color:var(--muted); }
+
+.dot{
+  width:10px;height:10px;border-radius:999px;
+  background:rgba(255,255,255,.3);
+  border:1px solid var(--border);
+}
+
+.dot.good{ background:rgba(34,197,94,.9); border-color:rgba(34,197,94,.6); }
+.dot.warn{ background:rgba(245,158,11,.95); border-color:rgba(245,158,11,.6); }
+.dot.bad{ background:rgba(239,68,68,.95); border-color:rgba(239,68,68,.6); }
+
+/* -------- spinner -------- */
+
+.spinner{
+  width:16px;height:16px;border-radius:999px;
+  border:2px solid rgba(255,255,255,.25);
+  border-top-color:rgba(255,255,255,.9);
+  animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+  to{ transform:rotate(360deg); }
+}
+
+.authors{
+  font-size:12px;
+  color: rgba(255,255,255,.55);
+  margin-top: 6px;
+}
+
+.loginHeader{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  margin-bottom: 8px;
+}
+.loginTitle{
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: .2px;
+}
+.loginSub{
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.jitGate{
+  border-color: rgba(245,158,11,.35);
+  background: linear-gradient(180deg, rgba(245,158,11,.08), rgba(16,26,38,.75));
+}
+.jitGateTop{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.jitGateTitle{
+  font-size: 14px;
+  font-weight: 800;
+}
+.jitGateSub{
+  font-size: 12px;
+  color: rgba(255,255,255,.7);
+  margin-top: 3px;
+}
+select.input{
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, rgba(255,255,255,.55) 50%),
+    linear-gradient(135deg, rgba(255,255,255,.55) 50%, transparent 50%);
+  background-position: calc(100% - 16px) calc(1em + 2px), calc(100% - 11px) calc(1em + 2px);
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 34px;
+}
+
+.page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.appShell{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}

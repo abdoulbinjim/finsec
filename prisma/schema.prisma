@@ -1,0 +1,165 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  ADMIN
+  EMPLOYEE
+}
+
+enum WorkloadLevel {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum CampaignStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum PhishAction {
+  OPENED
+  CLICKED
+  REPORTED
+  IGNORED
+}
+
+enum Channel {
+  IN_APP
+  EMAIL
+  SLACK
+}
+
+model User {
+  id            String        @id @default(cuid())
+  email         String        @unique
+  name          String
+  department    String
+  role          UserRole      @default(EMPLOYEE)
+  workloadLevel WorkloadLevel @default(MEDIUM)
+
+  passwordHash String
+
+  assignments         Assignment[]
+  trainingCompletions TrainingCompletion[]
+  nudges              Nudge[]
+
+  createdCampaigns Campaign[] @relation("CampaignCreatedBy")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Campaign {
+  id     String         @id @default(cuid())
+  name   String
+  status CampaignStatus @default(INACTIVE)
+
+  frequencyDays    Int     @default(30)
+  targetDepartment String?
+
+  createdById String
+  createdBy   User   @relation("CampaignCreatedBy", fields: [createdById], references: [id])
+
+  assignments Assignment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PhishingTemplate {
+  id         String  @id @default(cuid())
+  category   String
+  difficulty Int     @default(1)
+  subject    String
+  fromEmail  String
+  body       String
+  landingUrl String?
+
+  assignments Assignment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Assignment {
+  id String @id @default(cuid())
+
+  campaignId String
+  campaign   Campaign @relation(fields: [campaignId], references: [id])
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  templateId String
+  template   PhishingTemplate @relation(fields: [templateId], references: [id])
+
+  sentAt      DateTime?
+  action      PhishAction?
+  completedAt DateTime?
+
+  phase       String @default("baseline") // baseline | post
+  scoreImpact Int    @default(0)
+
+  trainingCompletions TrainingCompletion[] @relation("AssignmentTrainingCompletions")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId, phase])
+  @@index([campaignId])
+}
+
+model TrainingModule {
+  id              String @id @default(cuid())
+  topic           String
+  durationSeconds Int    @default(20)
+  content         String
+
+  completions TrainingCompletion[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model TrainingCompletion {
+  id String @id @default(cuid())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  moduleId String
+  module   TrainingModule @relation(fields: [moduleId], references: [id])
+
+  assignmentId String?
+  assignment   Assignment? @relation("AssignmentTrainingCompletions", fields: [assignmentId], references: [id])
+
+  completedAt DateTime @default(now())
+
+  // backend-enforced gate
+  acknowledgedAt DateTime?
+
+  // ✅ AI Coach quiz storage
+  jitQuestions Json?
+  jitAnswers   Json?
+  quizPassedAt DateTime?
+}
+
+
+model Nudge {
+  id String @id @default(cuid())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  channel Channel  @default(IN_APP)
+  message String
+  sentAt  DateTime @default(now())
+
+  reason String?
+}
